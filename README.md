@@ -1,3 +1,5 @@
+Readme editor ==> https://stackedit.io/app#
+
 GitHub:
 
 Al empezar el día	git fetch/pull (Para bajar lo que hicieron otros).
