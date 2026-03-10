@@ -1,78 +1,78 @@
-Readme editor ==> https://stackedit.io/app#
+﻿# Beijing Air Quality
 
-GitHub:
+Proyecto de análisis de calidad del aire en Beijing con flujo reproducible en Python + SQL (DuckDB).
 
-Al empezar el día	git fetch/pull (Para bajar lo que hicieron otros).
+## Objetivo
+Analizar patrones espacio-temporales de contaminantes (en especial PM2.5), generar visualizaciones para comunicación pública y proponer recomendaciones accionables para el Ayuntamiento.
 
-Al terminar una tarea	git add . sube todo, git add archivoX sube un archivo en concreto, git commit -m 'limpieza datos' (Para guardar tu "foto" local).
+## Estructura del repositorio
 
-Para que otros lo vean	git push (Para subirlo a la nube).
+```text
+beijing-air-quality/
+├─ data/
+│  ├─ raw/
+│  └─ processed/
+├─ notebooks/
+│  ├─ 00_guia_navegacion.ipynb
+│  ├─ 01_limpieza_y_unificacion.ipynb
+│  ├─ 02_eda_y_visualizacion.ipynb
+│  ├─ 03_sql_y_resumen_ejecutivo.ipynb
+│  └─ 04_impacto_normativo_y_riesgos.ipynb
+├─ src/
+│  ├─ __init__.py
+│  ├─ io_utils.py
+│  ├─ cleaning.py
+│  └─ plots.py
+├─ reports/
+│  ├─ *.png
+│  ├─ resumen_ejecutivo.md
+│  ├─ contexto_ambiental_beijing.md
+│  └─ decalogo_recomendaciones.md
+├─ README.md
+└─ requirements.txt
+```
 
+## Instalación
 
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+```
 
-\# Proyecto: Calidad del Aire en Beijing 🇨🇳
+## Ejecución
 
-\*\*Analistas de Datos:\*\* \[Nombres de los integrantes]
+1. Abrir Jupyter (`jupyter lab` o `jupyter notebook`).
+2. Ejecutar en este orden:
+   - `notebooks/00_guia_navegacion.ipynb`
+   - `notebooks/01_limpieza_y_unificacion.ipynb`
+   - `notebooks/02_eda_y_visualizacion.ipynb`
+   - `notebooks/03_sql_y_resumen_ejecutivo.ipynb`
+   - `notebooks/04_impacto_normativo_y_riesgos.ipynb`
+3. Verificar que se generan/actualizan figuras en `reports/`.
 
+## Resumen técnico del dataset
 
+- Fuente: UCI Beijing Multi-Site Air-Quality Data.
+- Cobertura temporal: **2013-03-01 00:00:00 a 2017-02-28 23:00:00**.
+- Estaciones: **12**.
+- Registros totales: **420,768**.
+- Métricas rápidas (PM2.5, serie procesada actual):
+  - Media global: **79.84 µg/m³**.
+  - Horas > 35 µg/m³: **62.70%**.
+  - Horas > 75 µg/m³: **39.07%**.
 
-Este repositorio contiene el análisis técnico y las recomendaciones estratégicas para el Ayuntamiento de Beijing sobre la gestión de la contaminación ambiental.
+## Entregables incluidos
 
+- Notebooks ejecutables de limpieza, EDA y SQL.
+- Comparativa de suavizado (`rolling` vs `EWMA`).
+- Análisis horario, semanal y estacional.
+- Heatmap hora x día y banda de variabilidad (IQR).
+- Resumen ejecutivo (`reports/resumen_ejecutivo.md`).
+- Decálogo para Ayuntamiento (`reports/decalogo_recomendaciones.md`).
+- Contexto ambiental realista actualizado (`reports/contexto_ambiental_beijing.md`).
+- Resultados regulatorios frente a GB 3095 (`reports/resultados_normativa_china.md`).
 
+## Nota metodológica
 
----
-
-
-
-\## 📂 Estructura del Repositorio
-
-
-
-La organización de este proyecto sigue los estándares de la industria para asegurar que sea reproducible y profesional:
-
-
-
-\### 1. `data/` - El Almacén de Información
-
-En Data Science, la integridad de los datos es sagrada. Por ello, dividimos esta carpeta:
-
-\* \*\*`raw/`\*\*: Contiene los 12 archivos CSV originales descargados de la UCI. \*\*Nunca se modifican\*\*.
-
-\* \*\*`processed/`\*\*: Aquí guardamos el dataset unificado y limpio tras el proceso de carga, interpolación de nulos y ajuste de formatos temporales.
-
-
-
-\### 2. `notebooks/` - El Laboratorio
-
-Es el espacio de experimentación y análisis visual:
-
-\* \*\*EDA (Análisis Exploratorio):\*\* Identificación de valores nulos, creación de mapas de calor y matrices de correlación para entender el comportamiento de los contaminantes.
-
-\* \*\*Features (Ingeniería de Variables):\*\* Creación de nuevas variables (ej. medias móviles de 24h, distinción entre fin de semana y día laborable) para enriquecer el análisis.
-
-
-
-\### 3. `src/` - El Motor (Utilidades)
-
-Para mantener los Notebooks legibles, extraemos la lógica compleja a scripts de Python (`.py`):
-
-\* Contiene funciones reutilizables de limpieza, cálculos matemáticos o generación de plots específicos.
-
-\* Permite importar herramientas directamente al Notebook: `from src.limpieza import limpiar\_datos`.
-
-
-
-\### 4. `reports/` - El Escaparate
-
-Centralizamos todas las visualizaciones finales:
-
-\* Figuras generadas (`.png`, `.jpg`) listas para ser insertadas en el informe ejecutivo o presentación final.
-
-
-
-\### 5. `Documentación` - El Manual de Instrucciones
-
-\* \*\*`README.md`\*\*: Portada y guía rápida del proyecto.
-
-\* \*\*`requirements.txt`\*\*: Listado de librerías necesarias para que el código funcione en cualquier ordenador.
-
+Los datos del proyecto cubren 2013-2017; para decisiones de política actual se deben contrastar con series recientes oficiales (incluidas en `reports/contexto_ambiental_beijing.md`).
